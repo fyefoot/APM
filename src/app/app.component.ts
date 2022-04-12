@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CountriesService } from './countries.service';
+import { CountriesService } from './services/countries.service';
 
 @Component({
   selector: 'pm-root',

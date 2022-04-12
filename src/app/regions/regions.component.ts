@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CountriesService } from '../countries.service';
+import { CountriesService } from '../services/countries.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app.state';
