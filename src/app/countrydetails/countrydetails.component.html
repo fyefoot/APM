@@ -1,0 +1,31 @@
+<table cellpadding="1" cellspacing="0" style="text-align:top;">
+    <tr>
+      <td>Country</td>
+      <td style="padding-left:20px;padding-right:20px">:</td>
+      <td>{{this.selectedCountryName}}</td>
+    </tr>
+    <tr>
+      <td>Capital</td>
+      <td style="padding-left:20px;padding-right:20px">:</td>
+      <td>{{this.selectedCountryCapital}}</td>
+    </tr>
+    <tr>
+      <td>Population</td>
+      <td style="padding-left:20px;padding-right:20px">:</td>
+      <td>{{this.selectedCountryPopulation}}</td>
+    </tr>
+    <tr>
+      <td>Currencies</td>
+      <td style="padding-left:20px;padding-right:20px">:</td>
+      <td>
+        <div *ngFor="let currency of selectedCountryCurrencies">
+          {{currency.name}}
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>Flag</td>
+      <td style="padding-left:20px;padding-right:20px">:</td>
+      <td><img width="100px" [src]='this.selectedCountryFlag' /></td>
+    </tr>
+  </table>

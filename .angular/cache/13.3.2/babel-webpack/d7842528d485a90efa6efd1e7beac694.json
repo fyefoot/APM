@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const ADD_EUROPEANCOUNTRIES = 'ADD_EUROPEANCOUNTRIES';\nexport function addCountryListEuropeReducer(state = [], action) {\n  switch (action.type) {\n    case ADD_EUROPEANCOUNTRIES:\n      console.log('added countries');\n      return [...state, action.payload];\n\n    default:\n      return state;\n  }\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,22 @@
+<form>
+    <div class="form-group">
+      <label for="region">Region</label>
+      <select class="form-control" style="width:400px" (change)="changeRegion($event.target.value)">
+        <option value="Default">Choose a Region</option>
+        <option *ngFor="let region of regionsList">{{region.name}} </option>
+      </select>
+    </div>
+    <div style="height:20px"></div>
+    <div class="form-group">
+      <label for="country">Country</label>
+      <select class="form-control" style="width:400px" [disabled]="isCountryDisabled"  (change)="changeCountry($event.target.value)">
+        <option value="Default">Choose a Country</option>
+        <option *ngFor="let country of countries">{{country.name}}</option>
+      </select>
+    </div>
+  </form>
+  <div style="height:20px"></div>
+  <div style="height:20px"></div>
+
+  <!-- for simplicity I am passing the selected country details straight to the sub-component -->
+  <pm-countrydetails [country]="this.selectedCountry" *ngIf="isCountrySelected"></pm-countrydetails>

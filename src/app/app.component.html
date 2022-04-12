@@ -1,0 +1,64 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container">
+  <div style="height:40px"></div>
+  <h1>Region / Country selector (not using store)</h1>
+  <div style="height:20px"></div>
+  <form>
+    <div class="form-group">
+      <label for="region">Region</label>
+      <select class="form-control" style="width:400px" (change)="changeRegion($event.target.value)">
+        <option value="Default">Choose a Region</option>
+        <option *ngFor="let region of regionList">{{region.name}} </option>
+      </select>
+    </div>
+    <div style="height:20px"></div>
+    <div class="form-group">
+      <label for="country">Country</label>
+      <select class="form-control" style="width:400px" [disabled]="isCountryDisabled"  (change)="changeCountry($event.target.value)">
+        <option value="Default">Choose a Country</option>
+        <option *ngFor="let country of countries">{{country.name}}</option>
+      </select>
+    </div>
+  </form>
+  <div style="height:20px"></div>
+  <div style="height:20px"></div>
+  <table cellpadding="1" cellspacing="0" style="text-align:top;" *ngIf="isCountrySelected">
+    <tr>
+      <td>Country</td>
+      <td style="padding-left:20px;padding-right:20px">:</td>
+      <td>{{this.selectedCountryName}}</td>
+    </tr>
+    <tr>
+      <td>Capital</td>
+      <td style="padding-left:20px;padding-right:20px">:</td>
+      <td>{{this.selectedCountryCapital}}</td>
+    </tr>
+    <tr>
+      <td>Population</td>
+      <td style="padding-left:20px;padding-right:20px">:</td>
+      <td>{{this.selectedCountryPopulation}}</td>
+    </tr>
+    <tr>
+      <td>Currencies</td>
+      <td style="padding-left:20px;padding-right:20px">:</td>
+      <td>
+        <div *ngFor="let currency of selectedCountryCurrencies">
+          {{currency.name}}
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>Flag</td>
+      <td style="padding-left:20px;padding-right:20px">:</td>
+      <td><img width="100px" [src]='this.selectedCountryFlag' /></td>
+    </tr>
+  </table>
+</div>
+
+<div class="container">
+  <div style="height:40px"></div>
+  <h1>Region / Country selector (using store)</h1>
+  <div style="height:20px"></div>
+
+  <pm-regions></pm-regions>
+</div>
