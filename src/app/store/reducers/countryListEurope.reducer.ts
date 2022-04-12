@@ -1,14 +1,15 @@
-import { CountryListEurope } from '../models/countryListEurope.model';
+import { CountryDetail } from '../models/CountryDetail.model';
+import { EuropeanAction, EuropeanActionType } from '../actions/european.action';
 
-export const ADD_EUROPEANCOUNTRIES = 'ADD_EUROPEANCOUNTRIES';
-
-export function addCountryListEuropeReducer(state: CountryListEurope[] = [], action) {
+export function addCountryListEuropeReducer(
+  state: Array<CountryDetail> = [],
+  action: EuropeanAction
+)
+{
   switch (action.type) {
-    case ADD_EUROPEANCOUNTRIES:
-      console.log('added european countries to the store');
-      console.log(action.payload);
+    case EuropeanActionType.ADD_EUROPEAN:
       return [...state, action.payload];
     default:
-        return state;
+      return state;
     }
 }

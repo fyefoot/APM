@@ -3,8 +3,9 @@ import { CountriesService } from '../services/countries.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app.state';
-import { CountryListEurope } from '../store/models/countryListEurope.model';
-import { CountryListAsia } from '../store/models/countryListAsia.model';
+import { CountryDetail } from '../store/models/countryDetail.model';
+import { AddAsianItemAction } from '../store/actions/asian.action';
+import { AddEuropeanItemAction } from '../store/actions/european.action';
 
 @Component({
   selector: 'pm-regions',
@@ -13,13 +14,13 @@ import { CountryListAsia } from '../store/models/countryListAsia.model';
 })
 export class RegionsComponent implements OnInit {
 
-  storeCountriesAsia: Observable<any>;
-  storeCountriesEurope: Observable<any>;
+  storeCountriesAsia$: Observable<any>;
+  storeCountriesEurope$: Observable<any>;
 
   constructor(private httpService: CountriesService,
               private store: Store<AppState>) {
-                this.storeCountriesAsia = this.store.select(state => state.AsianCountries);
-                this.storeCountriesEurope = this.store.select(state => state.EuropeanCountries);
+                this.storeCountriesAsia$ = this.store.select(state => state.AsianCountries);
+                this.storeCountriesEurope$ = this.store.select(state => state.EuropeanCountries);
               }
 
   title = 'Region/Country selector';
@@ -27,6 +28,7 @@ export class RegionsComponent implements OnInit {
   isCountrySelected = false;
   countryListEurope: any; // from the store
   countryListAsia: any;
+  responseObj: any;
 
   selectedCountryName = '';
   selectedCountryCapital = '';
@@ -49,73 +51,98 @@ export class RegionsComponent implements OnInit {
     if (region === 'Default') {
       this.changeCountry('Default');
     } else {
-      console.log('European countries ' + this.countryListEurope); // empty first time
-      console.log('Asian countries ' + this.countryListAsia); // empty first time
 
       if (region === 'Europe' && this.countryListEurope !== undefined) {
-        console.log('Add existing europeancountries from store');
-        // this.countries = this.countryListEurope;
-        this.isCountrySelected = false;
-        this.countryListEurope = this.storeCountriesEurope;
+
         this.countries = this.countryListEurope;
+        this.isCountrySelected = false;
         this.isCountryDisabled = false;
       } else if (region === 'Asia' && this.countryListAsia !== undefined) {
-        console.log('Add existing asian countries from store');
-        // this.countries = this.countryListAsia;
-        this.countryListAsia = this.storeCountriesAsia;
+
         this.countries = this.countryListAsia;
         this.isCountrySelected = false;
         this.isCountryDisabled = false;
       } else {
-        console.log('Add countries to the store');
+
         // calls the http get on demand for a specified region
         this.httpService.getPosts(region).subscribe(
           (response) => {
 
+            this.responseObj = response as CountryDetail;
+
+            let obj: CountryDetail;
+            
+            for (let x = 0; x < this.responseObj.length; x ++) {
+              obj = {
+                SelectedCountryName: this.responseObj[x].name,
+                SelectedCountryCapital: this.responseObj[x].capital,
+                SelectedCountryPopulation: this.responseObj[x].population,
+                SelectedCountryCurrencies: this.responseObj[x].currencies,
+                SelectedCountryFlag: this.responseObj[x].flags.png
+              } 
+
               if (region === 'Europe') {
-                // this.countryListEurope = response;
-
-                this.store.dispatch({
-                  type: 'ADD_EUROPEANCOUNTRIES',
-                  payload: { EuropeanCountries: response } as CountryListEurope, });
-
-                this.countryListEurope = this.storeCountriesEurope;
-                this.countries = this.countryListEurope;
-                console.log('store europe list = ' +  this.storeCountriesEurope);
+                this.store.dispatch(new AddEuropeanItemAction(obj as CountryDetail));
               }
 
               if (region === 'Asia') {
-                // this.countryListAsia = response;
+                this.store.dispatch(new AddAsianItemAction(obj as CountryDetail));
+              }
+            }
 
-                this.store.dispatch({
-                  type: 'ADD_ASIANCOUNTRIES',
-                  payload: { AsianCountries: response } as CountryListAsia, });
+            if (region === 'Europe') {
 
-                this.countryListAsia = this.storeCountriesAsia;
-                this.countries = this.countryListAsia;
-                console.log('store asia list = ' +  this.storeCountriesAsia);
+              let obj = [];
+              this.storeCountriesEurope$.forEach(element => {
+                // only expecting one item containing the data list
+                obj = element;
+              });
+
+              this.countryListEurope = [];
+              for (let x = 0; x < obj.length; x++) {
+                this.countryListEurope.push(obj[x]);
               }
 
-              this.isCountryDisabled = (region === 'Default') ? true : false;
-              this.isCountrySelected = false;
-            },
+              // this.countryListEurope = this.storeCountriesEurope$;
+              this.countries = this.countryListEurope;
+              console.log('Added European countries to the store');
+            }
+
+            if (region === 'Asia') {
+
+              let obj = [];
+              this.storeCountriesAsia$.forEach(element => {
+                // only expecting one item containing the data list
+                obj = element;
+              });
+              
+              this.countryListAsia = [];
+              for (let x = 0; x < obj.length; x++) {
+                this.countryListAsia.push(obj[x]);
+              }
+
+              // this.countryListAsia = this.storeCountriesAsia$;
+              this.countries = this.countryListAsia;
+              console.log('Added Asian countries to the store');
+            }
+  
+            this.isCountryDisabled = (region === 'Default') ? true : false;
+            this.isCountrySelected = false;
+          },
           (error) => { console.log(error); });
-
-
       }
     }
   }
 
   changeCountry(country) {
-
     // find the selected country or leave undefined if default picked
-    this.selectedCountry = this.countries.filter(reg => reg.name === country);
 
     if (country === 'Default') {
       this.countries = []; // empties the dropdown list and leaves the default message which is disabled
       this.isCountrySelected = false;
       this.isCountryDisabled = true;
     } else {
+      this.selectedCountry = this.countries.filter(reg => reg.SelectedCountryName === country);
       this.isCountrySelected = true;
       this.isCountryDisabled = false;
     }
@@ -123,5 +150,4 @@ export class RegionsComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

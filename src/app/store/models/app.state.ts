@@ -1,6 +1,5 @@
-import { CountryListEurope } from './countryListEurope.model';
-import { CountryListAsia } from './countryListAsia.model';
+import { CountryDetail } from './countryDetail.model';
 export interface AppState {
-  readonly EuropeanCountries: CountryListEurope[];
-  readonly AsianCountries: CountryListAsia[];
+  readonly EuropeanCountries: Array<CountryDetail>;
+  readonly AsianCountries: Array<CountryDetail>;
 }

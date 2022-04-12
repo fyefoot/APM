@@ -19,16 +19,14 @@ export class CountrydetailsComponent implements OnInit, OnChanges {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnChanges() {
-    // console.log('Country component, the country \'' + this.country[0].name + '\' was selected OnChanges');
 
-    this.selectedCountryName = this.country[0].name;
-    this.selectedCountryCapital = this.country[0].capital;
-    this.selectedCountryPopulation = this.country[0].population;
-    this.selectedCountryCurrencies = this.country[0].currencies;
-    this.selectedCountryFlag = this.country[0].flag;
+    this.selectedCountryName = this.country[0].SelectedCountryName;
+    this.selectedCountryCapital = this.country[0].SelectedCountryCapital;
+    this.selectedCountryPopulation = this.country[0].SelectedCountryPopulation;
+    this.selectedCountryCurrencies = this.country[0].SelectedCountryCurrencies;
+    this.selectedCountryFlag = this.country[0].SelectedCountryFlag;
   }
 
   ngOnInit() {
-    // console.log('Country component, the country \'' + this.country[0].name + '\' was selected OnInit');
   }
 }

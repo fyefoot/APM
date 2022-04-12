@@ -1,14 +1,14 @@
-import { CountryListAsia } from '../models/countryListAsia.model';
+import { CountryDetail } from '../models/CountryDetail.model';
+import { AsianAction, AsianActionType } from '../actions/asian.action';
 
-export const ADD_ASIANCOUNTRIES = 'ADD_ASIANCOUNTRIES';
-
-export function addCountryListAsiaReducer(state: CountryListAsia[] = [], action) {
+export function addCountryListAsiaReducer(
+  state: CountryDetail[] = [],
+  action: AsianAction
+) {
   switch (action.type) {
-    case ADD_ASIANCOUNTRIES:
-      console.log('added asian countries to the store');
-      console.log(action.payload);
+    case AsianActionType.ADD_ASIAN:
       return [...state, action.payload];
     default:
-        return state;
+      return state;
     }
 }
