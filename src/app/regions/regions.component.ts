@@ -39,10 +39,12 @@ export class RegionsComponent implements OnInit {
     { name: 'Asia'}
   ];
 
-  countries: any; // get this from the store
+  countries: any; // need to get this from the store
   selectedCountry: Array<any>;
 
   changeRegion(region: string) {
+
+    this.isCountryDisabled = false;
 
     if (region === 'Default') {
       this.changeCountry('Default');
