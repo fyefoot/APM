@@ -10,7 +10,8 @@ import { AddEuropeanItemAction } from '../store/actions/european.action';
 @Component({
   selector: 'pm-regions',
   templateUrl: './regions.component.html',
-  styleUrls: ['./regions.component.css']
+  styleUrls: ['./regions.component.css'],
+  // providers: [CountriesService]
 })
 export class RegionsComponent implements OnInit {
 

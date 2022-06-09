@@ -4,7 +4,8 @@ import { CountriesService } from './services/countries.service';
 @Component({
   selector: 'pm-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  // providers: [CountriesService]
 })
 export class AppComponent implements OnInit {
 
