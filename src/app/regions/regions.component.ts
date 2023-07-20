@@ -38,8 +38,8 @@ export class RegionsComponent implements OnInit {
   selectedCountryFlag = '';
 
   regionsList: Array<any> = [
-    { name: 'Europe' },
-    { name: 'Asia'}
+    { name: 'Asia'},
+    { name: 'Europe' }
   ];
 
   countries: any; // need to get this from the store
@@ -93,6 +93,9 @@ export class RegionsComponent implements OnInit {
 
             if (region === 'Europe') {
 
+              // an example of how to debug an observable
+              console.log(this.storeCountriesEurope$.subscribe(data => { console.log(data) }));
+
               let obj = [];
               this.storeCountriesEurope$.forEach(element => {
                 // only expecting one item containing the data list
@@ -110,6 +113,9 @@ export class RegionsComponent implements OnInit {
             }
 
             if (region === 'Asia') {
+
+              // an example of how to debug an observable
+              console.log(this.storeCountriesAsia$.subscribe(data => { console.log(data) }));
 
               let obj = [];
               this.storeCountriesAsia$.forEach(element => {

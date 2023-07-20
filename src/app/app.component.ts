@@ -24,8 +24,11 @@ export class AppComponent implements OnInit {
   selectedCountryFlag = '';
 
   regionList: Array<any> = [
+    //{ name: 'Africa' },
+    //{ name: 'Americas' },
+    { name: 'Asia'},
     { name: 'Europe' },
-    { name: 'Asia'}
+    //{ name: 'Oceania' }
   ];
 
   countries: any;
