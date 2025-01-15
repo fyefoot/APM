@@ -1,4 +1,4 @@
-import { CountryDetail } from '../models/CountryDetail.model';
+import { CountryDetail } from '../models/countryDetail.model';
 import { AsianAction, AsianActionType } from '../actions/asian.action';
 
 export function addCountryListAsiaReducer(
